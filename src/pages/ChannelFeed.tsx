@@ -70,6 +70,18 @@ const ChannelFeed = () => {
           fetchNotes();
         }
       )
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'votes'
+        },
+        () => {
+          fetchNotes();
+          fetchUserVotes();
+        }
+      )
       .subscribe();
 
     return () => {
