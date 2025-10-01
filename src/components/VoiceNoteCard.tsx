@@ -37,6 +37,16 @@ export const VoiceNoteCard = ({
 
   const handleVote = async (voteType: number) => {
     if (!user || isVoting) return;
+    
+    // Prevent voting on own notes
+    if (note.user_id === user.id) {
+      toast({
+        title: "Cannot vote",
+        description: "You cannot vote on your own voice note",
+      });
+      return;
+    }
+    
     setIsVoting(true);
 
     try {
@@ -143,7 +153,7 @@ export const VoiceNoteCard = ({
               variant="ghost"
               size="sm"
               onClick={() => handleVote(1)}
-              disabled={isVoting}
+              disabled={isVoting || (user && note.user_id === user.id)}
               className={userVote?.vote_type === 1 ? 'text-primary' : ''}
             >
               <ArrowUp className="w-5 h-5" />
@@ -155,7 +165,7 @@ export const VoiceNoteCard = ({
               variant="ghost"
               size="sm"
               onClick={() => handleVote(-1)}
-              disabled={isVoting}
+              disabled={isVoting || (user && note.user_id === user.id)}
               className={userVote?.vote_type === -1 ? 'text-destructive' : ''}
             >
               <ArrowDown className="w-5 h-5" />
