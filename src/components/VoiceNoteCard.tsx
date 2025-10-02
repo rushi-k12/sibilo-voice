@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowUp, ArrowDown, Play, Pause, Trash2 } from 'lucide-react';
@@ -36,14 +36,19 @@ export const VoiceNoteCard = ({
   const [isDeleting, setIsDeleting] = useState(false);
   const [localVotesCount, setLocalVotesCount] = useState(note.votes_count);
   const [localUserVote, setLocalUserVote] = useState(userVote?.vote_type);
+  const isOptimisticUpdateRef = useRef(false);
 
-  // Sync local state when props change (from real-time updates)
+  // Sync local state when props change (only when not doing optimistic updates)
   useEffect(() => {
-    setLocalVotesCount(note.votes_count);
+    if (!isOptimisticUpdateRef.current) {
+      setLocalVotesCount(note.votes_count);
+    }
   }, [note.votes_count]);
 
   useEffect(() => {
-    setLocalUserVote(userVote?.vote_type);
+    if (!isOptimisticUpdateRef.current) {
+      setLocalUserVote(userVote?.vote_type);
+    }
   }, [userVote?.vote_type]);
 
   const handleVote = async (voteType: number) => {
@@ -59,23 +64,25 @@ export const VoiceNoteCard = ({
     }
     
     setIsVoting(true);
+    isOptimisticUpdateRef.current = true;
 
     // Store previous values for rollback on error
     const previousCount = localVotesCount;
     const previousUserVote = localUserVote;
 
     try {
-      // Optimistic update
+      // Optimistic update - always update to show final result
       if (localUserVote === voteType) {
-        // Removing vote
+        // Removing vote: subtract the vote value
         setLocalVotesCount(prev => prev - voteType);
         setLocalUserVote(undefined);
-      } else if (localUserVote) {
-        // Changing vote
-        setLocalVotesCount(prev => prev - localUserVote + voteType);
+      } else if (localUserVote !== undefined) {
+        // Changing vote: remove old vote and add new vote
+        const delta = voteType - localUserVote;
+        setLocalVotesCount(prev => prev + delta);
         setLocalUserVote(voteType);
       } else {
-        // Adding new vote
+        // Adding new vote: add the vote value
         setLocalVotesCount(prev => prev + voteType);
         setLocalUserVote(voteType);
       }
@@ -112,12 +119,16 @@ export const VoiceNoteCard = ({
         if (error) throw error;
       }
 
-      // Refresh data in background
-      setTimeout(() => onVoteChange(), 500);
+      // Refresh data in background and allow prop sync after a short delay
+      setTimeout(() => {
+        isOptimisticUpdateRef.current = false;
+        onVoteChange();
+      }, 500);
     } catch (error: any) {
       // Rollback optimistic update on error
       setLocalVotesCount(previousCount);
       setLocalUserVote(previousUserVote);
+      isOptimisticUpdateRef.current = false;
       
       toast({
         variant: "destructive",
