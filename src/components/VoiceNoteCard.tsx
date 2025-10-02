@@ -22,25 +22,29 @@ interface VoiceNoteCardProps {
   onPlayToggle: () => void;
 }
 
-export const VoiceNoteCard = ({ 
-  note, 
-  userVote, 
-  onVoteChange, 
+export const VoiceNoteCard = ({
+  note,
+  userVote,
+  onVoteChange,
   onDelete,
   isPlaying,
-  onPlayToggle 
+  onPlayToggle
 }: VoiceNoteCardProps) => {
   const { user } = useAuth();
   const { toast } = useToast();
   const [isVoting, setIsVoting] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+
+  // Local state for optimistic updates
   const [localVotesCount, setLocalVotesCount] = useState(note.votes_count);
   const [localUserVote, setLocalUserVote] = useState(userVote?.vote_type);
+
+  // Ref to know when optimistic update is active
   const isOptimisticUpdateRef = useRef(false);
 
-  // Sync local state when props change (only when not doing optimistic updates)
+  // Sync local state from props only if not in optimistic update
   useEffect(() => {
-    if (!isOptimisticUpdateRef.current) {
+    if (!isOptimisticUpdateRef.current && note.votes_count !== localVotesCount) {
       setLocalVotesCount(note.votes_count);
     }
   }, [note.votes_count]);
@@ -53,88 +57,69 @@ export const VoiceNoteCard = ({
 
   const handleVote = async (voteType: number) => {
     if (!user || isVoting) return;
-    
-    // Prevent voting on own notes
+
     if (note.user_id === user.id) {
-      toast({
-        title: "Cannot vote",
-        description: "You cannot vote on your own voice note",
-      });
+      toast({ title: "Cannot vote", description: "You cannot vote on your own voice note" });
       return;
     }
-    
+
     setIsVoting(true);
     isOptimisticUpdateRef.current = true;
 
-    // Store previous values for rollback on error
     const previousCount = localVotesCount;
     const previousUserVote = localUserVote;
 
     try {
-      // Optimistic update - always update to show final result
+      // Optimistic update - show final result immediately
       if (localUserVote === voteType) {
-        // Removing vote: subtract the vote value
+        // Remove vote
         setLocalVotesCount(prev => prev - voteType);
         setLocalUserVote(undefined);
       } else if (localUserVote !== undefined) {
-        // Changing vote: remove old vote and add new vote
+        // Change vote: undo old, apply new
         const delta = voteType - localUserVote;
         setLocalVotesCount(prev => prev + delta);
         setLocalUserVote(voteType);
       } else {
-        // Adding new vote: add the vote value
+        // New vote
         setLocalVotesCount(prev => prev + voteType);
         setLocalUserVote(voteType);
       }
 
-      // Database operations
+      // Database operation
       if (userVote && userVote.vote_type === voteType) {
-        // Remove vote
         const { error } = await supabase
           .from('votes')
           .delete()
           .eq('note_id', note.id)
           .eq('user_id', user.id);
-
         if (error) throw error;
       } else if (userVote) {
-        // Update existing vote
         const { error } = await supabase
           .from('votes')
           .update({ vote_type: voteType })
           .eq('note_id', note.id)
           .eq('user_id', user.id);
-
         if (error) throw error;
       } else {
-        // Create new vote
         const { error } = await supabase
           .from('votes')
-          .insert({
-            note_id: note.id,
-            user_id: user.id,
-            vote_type: voteType
-          });
-
+          .insert({ note_id: note.id, user_id: user.id, vote_type: voteType });
         if (error) throw error;
       }
 
-      // Refresh data in background and allow prop sync after a short delay
+      // Allow prop updates after slight delay
       setTimeout(() => {
         isOptimisticUpdateRef.current = false;
         onVoteChange();
       }, 500);
     } catch (error: any) {
-      // Rollback optimistic update on error
+      // Rollback
       setLocalVotesCount(previousCount);
       setLocalUserVote(previousUserVote);
       isOptimisticUpdateRef.current = false;
-      
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: error.message,
-      });
+
+      toast({ variant: "destructive", title: "Error", description: error.message });
     } finally {
       setIsVoting(false);
     }
@@ -152,18 +137,10 @@ export const VoiceNoteCard = ({
 
       if (error) throw error;
 
-      toast({
-        title: "Deleted",
-        description: "Voice note deleted successfully",
-      });
-
+      toast({ title: "Deleted", description: "Voice note deleted successfully" });
       onDelete();
     } catch (error: any) {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: error.message,
-      });
+      toast({ variant: "destructive", title: "Error", description: error.message });
     } finally {
       setIsDeleting(false);
     }
@@ -246,9 +223,7 @@ export const VoiceNoteCard = ({
                   <div
                     key={i}
                     className="w-1 bg-primary/30 rounded-full"
-                    style={{
-                      height: `${Math.random() * 100}%`,
-                    }}
+                    style={{ height: `${Math.random() * 100}%` }}
                   />
                 ))}
               </div>
@@ -271,3 +246,4 @@ export const VoiceNoteCard = ({
     </Card>
   );
 };
+
