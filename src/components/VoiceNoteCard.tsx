@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowUp, ArrowDown, Play, Pause, Trash2 } from 'lucide-react';
@@ -34,6 +34,17 @@ export const VoiceNoteCard = ({
   const { toast } = useToast();
   const [isVoting, setIsVoting] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [localVotesCount, setLocalVotesCount] = useState(note.votes_count);
+  const [localUserVote, setLocalUserVote] = useState(userVote?.vote_type);
+
+  // Sync local state when props change (from real-time updates)
+  useEffect(() => {
+    setLocalVotesCount(note.votes_count);
+  }, [note.votes_count]);
+
+  useEffect(() => {
+    setLocalUserVote(userVote?.vote_type);
+  }, [userVote?.vote_type]);
 
   const handleVote = async (voteType: number) => {
     if (!user || isVoting) return;
@@ -49,7 +60,27 @@ export const VoiceNoteCard = ({
     
     setIsVoting(true);
 
+    // Store previous values for rollback on error
+    const previousCount = localVotesCount;
+    const previousUserVote = localUserVote;
+
     try {
+      // Optimistic update
+      if (localUserVote === voteType) {
+        // Removing vote
+        setLocalVotesCount(prev => prev - voteType);
+        setLocalUserVote(undefined);
+      } else if (localUserVote) {
+        // Changing vote
+        setLocalVotesCount(prev => prev - localUserVote + voteType);
+        setLocalUserVote(voteType);
+      } else {
+        // Adding new vote
+        setLocalVotesCount(prev => prev + voteType);
+        setLocalUserVote(voteType);
+      }
+
+      // Database operations
       if (userVote && userVote.vote_type === voteType) {
         // Remove vote
         const { error } = await supabase
@@ -81,8 +112,13 @@ export const VoiceNoteCard = ({
         if (error) throw error;
       }
 
-      onVoteChange();
+      // Refresh data in background
+      setTimeout(() => onVoteChange(), 500);
     } catch (error: any) {
+      // Rollback optimistic update on error
+      setLocalVotesCount(previousCount);
+      setLocalUserVote(previousUserVote);
+      
       toast({
         variant: "destructive",
         title: "Error",
@@ -154,19 +190,19 @@ export const VoiceNoteCard = ({
               size="sm"
               onClick={() => handleVote(1)}
               disabled={isVoting || (user && note.user_id === user.id)}
-              className={userVote?.vote_type === 1 ? 'text-primary' : ''}
+              className={localUserVote === 1 ? 'text-primary' : ''}
             >
               <ArrowUp className="w-5 h-5" />
             </Button>
             <span className="text-sm font-bold min-w-[2ch] text-center">
-              {note.votes_count}
+              {localVotesCount}
             </span>
             <Button
               variant="ghost"
               size="sm"
               onClick={() => handleVote(-1)}
               disabled={isVoting || (user && note.user_id === user.id)}
-              className={userVote?.vote_type === -1 ? 'text-destructive' : ''}
+              className={localUserVote === -1 ? 'text-destructive' : ''}
             >
               <ArrowDown className="w-5 h-5" />
             </Button>
