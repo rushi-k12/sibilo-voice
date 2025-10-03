@@ -36,13 +36,13 @@ export const VoiceNoteCard = ({
   const [isDeleting, setIsDeleting] = useState(false);
 
   // Local state to track displayed count and highlighted vote
-  const [localVotesCount, setLocalVotesCount] = useState(note.votes_count);
+  const [localVotesCount, setLocalVotesCount] = useState(note.votes_count ?? 0);
   const [localUserVote, setLocalUserVote] = useState(userVote?.vote_type);
   const isOptimisticRef = useRef(false);
 
   // Sync local state with props when DB updates - always overwrite and reset ref
   useEffect(() => {
-    setLocalVotesCount(note.votes_count);
+    setLocalVotesCount(note.votes_count ?? 0);
     isOptimisticRef.current = false;
   }, [note.votes_count]);
 
@@ -70,7 +70,7 @@ export const VoiceNoteCard = ({
     const prevVote = localUserVote;
 
     // Calculate the final resultant count
-    let newCount = localVotesCount;
+    let newCount = localVotesCount ?? 0;
     if (localUserVote === voteType) {
       // Remove vote
       newCount -= voteType;
@@ -195,7 +195,7 @@ export const VoiceNoteCard = ({
               <ArrowUp className="w-5 h-5" />
             </Button>
             <span className="text-sm font-bold min-w-[2ch] text-center">
-              {localVotesCount}
+              {localVotesCount ?? 0}
             </span>
             <Button
               variant="ghost"
