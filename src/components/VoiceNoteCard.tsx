@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowUp, ArrowDown, Play, Pause, Trash2 } from 'lucide-react';
@@ -39,6 +39,19 @@ export const VoiceNoteCard = ({
   const [localVotesCount, setLocalVotesCount] = useState(note.votes_count);
   const [localUserVote, setLocalUserVote] = useState(userVote?.vote_type);
   const isOptimisticRef = useRef(false);
+
+  // Sync local state with props when DB updates (but not during optimistic updates)
+  useEffect(() => {
+    if (!isOptimisticRef.current) {
+      setLocalVotesCount(note.votes_count);
+    }
+  }, [note.votes_count]);
+
+  useEffect(() => {
+    if (!isOptimisticRef.current) {
+      setLocalUserVote(userVote?.vote_type);
+    }
+  }, [userVote]);
 
   const handleVote = async (voteType: number) => {
     if (!user || isVoting) return;
