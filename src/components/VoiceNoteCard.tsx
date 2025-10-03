@@ -40,17 +40,15 @@ export const VoiceNoteCard = ({
   const [localUserVote, setLocalUserVote] = useState(userVote?.vote_type);
   const isOptimisticRef = useRef(false);
 
-  // Sync local state with props when DB updates (but not during optimistic updates)
+  // Sync local state with props when DB updates - always overwrite and reset ref
   useEffect(() => {
-    if (!isOptimisticRef.current) {
-      setLocalVotesCount(note.votes_count);
-    }
+    setLocalVotesCount(note.votes_count);
+    isOptimisticRef.current = false;
   }, [note.votes_count]);
 
   useEffect(() => {
-    if (!isOptimisticRef.current) {
-      setLocalUserVote(userVote?.vote_type);
-    }
+    setLocalUserVote(userVote?.vote_type);
+    isOptimisticRef.current = false;
   }, [userVote]);
 
   const handleVote = async (voteType: number) => {
@@ -120,6 +118,7 @@ export const VoiceNoteCard = ({
       // Rollback on error
       setLocalVotesCount(prevCount);
       setLocalUserVote(prevVote);
+      isOptimisticRef.current = false;
       toast({
         variant: 'destructive',
         title: 'Error',
@@ -127,7 +126,6 @@ export const VoiceNoteCard = ({
       });
     } finally {
       setIsVoting(false);
-      isOptimisticRef.current = false;
     }
   };
 
