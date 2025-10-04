@@ -273,10 +273,7 @@ const ChannelFeed = () => {
                   key={note.id}
                   note={note}
                   userVote={userVotes[note.id]}
-                  onVoteChange={() => {
-                    fetchUserVotes();
-                    fetchNotes();
-                  }}
+                  onVoteChange={fetchUserVotes}
                   onDelete={fetchNotes}
                   isPlaying={currentNoteId === note.id && isPlaying}
                   onPlayToggle={() => handlePlayToggle(note.id)}
