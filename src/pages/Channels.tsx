@@ -110,6 +110,20 @@ const Channels = () => {
                 </Card>
               ))}
             </div>
+          ) : filteredChannels.length === 0 ? (
+            <Card className="shadow-card border-border/50">
+              <CardContent className="p-12 text-center">
+                <Radio className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+                <h3 className="text-lg font-semibold mb-2">
+                  {searchQuery ? 'No channels found' : 'No channels yet'}
+                </h3>
+                <p className="text-muted-foreground">
+                  {searchQuery 
+                    ? 'Try adjusting your search terms' 
+                    : 'Check back later for new channels to join'}
+                </p>
+              </CardContent>
+            </Card>
           ) : (
             <div className="grid gap-4 md:grid-cols-2">
               {filteredChannels.map((channel) => (
