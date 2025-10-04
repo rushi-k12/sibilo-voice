@@ -5,7 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Mic, LogOut, Search, Radio } from 'lucide-react';
+import { Mic, LogOut, Search, Radio, User } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface Channel {
@@ -73,10 +73,15 @@ const Channels = () => {
                 Sibilo
               </h1>
             </div>
-            <Button variant="outline" onClick={handleSignOut} className="gap-2">
-              <LogOut className="w-4 h-4" />
-              Sign Out
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button variant="ghost" size="icon" onClick={() => navigate('/profile')}>
+                <User className="w-5 h-5" />
+              </Button>
+              <Button variant="outline" onClick={handleSignOut} className="gap-2">
+                <LogOut className="w-4 h-4" />
+                Sign Out
+              </Button>
+            </div>
           </div>
         </div>
       </header>
