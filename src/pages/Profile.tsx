@@ -20,19 +20,21 @@ interface VoiceNote {
 }
 
 const Profile = () => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [notes, setNotes] = useState<VoiceNote[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    if (loading) return;
+    
     if (!user) {
       navigate('/auth');
       return;
     }
     fetchUserNotes();
-  }, [user, navigate]);
+  }, [user, loading, navigate]);
 
   const fetchUserNotes = async () => {
     if (!user) return;
