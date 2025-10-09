@@ -3,13 +3,14 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Play, Pause, SkipForward, Radio, Mic } from 'lucide-react';
+import { ArrowLeft, SkipForward, Mic } from 'lucide-react';
 import { VoiceNoteCard } from '@/components/VoiceNoteCard';
 import { AudioRecorder } from '@/components/AudioRecorder';
 import { useToast } from '@/hooks/use-toast';
 import { Card, CardContent } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
+import { Navbar } from '@/components/Navbar';
 
 interface VoiceNote {
   id: string;
@@ -198,29 +199,22 @@ const ChannelFeed = () => {
   };
 
   return (
-    <div className="min-h-screen waveform-bg pb-32">
-      <header className="border-b border-border/50 bg-card/50 backdrop-blur-sm sticky top-0 z-10">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" onClick={() => navigate('/channels')}>
-              <ArrowLeft className="w-5 h-5" />
-            </Button>
-            <div className="flex items-center gap-2">
-              <Radio className="w-5 h-5 text-primary" />
-              <h1 className="text-xl font-bold">{channel?.name}</h1>
-            </div>
-          </div>
-          {channel?.description && (
-            <p className="text-sm text-muted-foreground mt-2 ml-14">{channel.description}</p>
-          )}
-        </div>
-      </header>
+    <div className="min-h-screen waveform-bg gradient-mesh pb-32">
+      <Navbar 
+        backButton={
+          <Button variant="ghost" size="icon" onClick={() => navigate('/channels')} className="hover-glow">
+            <ArrowLeft className="w-5 h-5" />
+          </Button>
+        }
+        title={channel?.name}
+        subtitle={channel?.description}
+      />
 
-      <main className="container mx-auto px-4 py-6">
+      <main className="container mx-auto px-4 py-6 animate-fade-in">
         <div className="max-w-3xl mx-auto space-y-6">
           <AudioRecorder channelId={channelId!} onUploadComplete={fetchNotes} />
 
-          <Card className="shadow-card border-border/50">
+          <Card className="glass shadow-card border-border/50 hover-glow">
             <CardContent className="p-4 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Switch
@@ -250,7 +244,7 @@ const ChannelFeed = () => {
             {isLoading ? (
               <div className="space-y-4">
                 {[1, 2, 3].map((i) => (
-                  <Card key={i} className="shadow-card animate-pulse">
+                  <Card key={i} className="glass shadow-card animate-pulse">
                     <CardContent className="p-4">
                       <div className="h-20 bg-muted rounded"></div>
                     </CardContent>
@@ -258,7 +252,7 @@ const ChannelFeed = () => {
                 ))}
               </div>
             ) : notes.length === 0 ? (
-              <Card className="shadow-card border-border/50">
+              <Card className="glass shadow-card border-border/50 animate-scale-in">
                 <CardContent className="p-12 text-center">
                   <Mic className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
                   <h3 className="text-lg font-semibold mb-2">No voice notes yet</h3>
@@ -268,16 +262,21 @@ const ChannelFeed = () => {
                 </CardContent>
               </Card>
             ) : (
-              notes.map((note) => (
-                <VoiceNoteCard
+              notes.map((note, index) => (
+                <div 
                   key={note.id}
-                  note={note}
-                  userVote={userVotes[note.id]}
-                  onVoteChange={fetchUserVotes}
-                  onDelete={fetchNotes}
-                  isPlaying={currentNoteId === note.id && isPlaying}
-                  onPlayToggle={() => handlePlayToggle(note.id)}
-                />
+                  className="animate-fade-in"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <VoiceNoteCard
+                    note={note}
+                    userVote={userVotes[note.id]}
+                    onVoteChange={fetchUserVotes}
+                    onDelete={fetchNotes}
+                    isPlaying={currentNoteId === note.id && isPlaying}
+                    onPlayToggle={() => handlePlayToggle(note.id)}
+                  />
+                </div>
               ))
             )}
           </div>

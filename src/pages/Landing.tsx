@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Mic, Radio, TrendingUp, Users } from 'lucide-react';
+import { Navbar } from '@/components/Navbar';
 
 const Landing = () => {
   const { user } = useAuth();
@@ -15,25 +16,8 @@ const Landing = () => {
   }, [user, navigate]);
 
   return (
-    <div className="min-h-screen waveform-bg">
-      {/* Header */}
-      <header className="border-b border-border/50 bg-card/50 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="inline-flex items-center justify-center w-10 h-10 rounded-full gradient-primary shadow-glow">
-                <Mic className="w-5 h-5 text-primary-foreground" />
-              </div>
-              <h1 className="text-2xl font-bold gradient-primary bg-clip-text text-transparent">
-                Sibilo
-              </h1>
-            </div>
-            <Button variant="outline" onClick={() => navigate('/auth')}>
-              Sign In
-            </Button>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen waveform-bg gradient-mesh">
+      <Navbar />
 
       {/* Hero Section */}
       <main className="container mx-auto px-4">
@@ -55,7 +39,7 @@ const Landing = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in" style={{ animationDelay: '0.2s' }}>
               <Button
                 size="lg"
-                className="gradient-primary shadow-glow text-lg px-8"
+                className="gradient-primary shadow-glow text-lg px-8 hover-lift"
                 onClick={() => navigate('/auth')}
               >
                 Get Started
@@ -63,7 +47,7 @@ const Landing = () => {
               <Button
                 size="lg"
                 variant="outline"
-                className="text-lg px-8"
+                className="text-lg px-8 glass hover-glow"
                 onClick={() => navigate('/auth')}
               >
                 Learn More
@@ -73,7 +57,7 @@ const Landing = () => {
 
           {/* App Preview Placeholder */}
           <div className="py-12 animate-fade-in" style={{ animationDelay: '0.4s' }}>
-            <div className="relative rounded-2xl overflow-hidden shadow-card border border-border/50 bg-card/30 backdrop-blur-sm">
+            <div className="relative rounded-2xl overflow-hidden shadow-elevated border border-border/50 glass hover-lift">
               <div className="aspect-video flex items-center justify-center">
                 <div className="text-center space-y-4 p-8">
                   <div className="inline-flex items-center justify-center w-20 h-20 rounded-full gradient-primary shadow-glow">
@@ -87,7 +71,7 @@ const Landing = () => {
 
           {/* Features */}
           <div className="py-20 grid md:grid-cols-3 gap-8">
-            <div className="text-center space-y-4 p-6 rounded-xl bg-card/30 backdrop-blur-sm border border-border/50 hover:shadow-glow transition-smooth animate-fade-in" style={{ animationDelay: '0.6s' }}>
+            <div className="text-center space-y-4 p-6 rounded-xl glass hover-lift hover-glow animate-fade-in" style={{ animationDelay: '0.6s' }}>
               <div className="inline-flex items-center justify-center w-12 h-12 rounded-full gradient-primary shadow-glow">
                 <Mic className="w-6 h-6 text-primary-foreground" />
               </div>
@@ -97,7 +81,7 @@ const Landing = () => {
               </p>
             </div>
 
-            <div className="text-center space-y-4 p-6 rounded-xl bg-card/30 backdrop-blur-sm border border-border/50 hover:shadow-glow transition-smooth animate-fade-in" style={{ animationDelay: '0.8s' }}>
+            <div className="text-center space-y-4 p-6 rounded-xl glass hover-lift hover-glow animate-fade-in" style={{ animationDelay: '0.8s' }}>
               <div className="inline-flex items-center justify-center w-12 h-12 rounded-full gradient-primary shadow-glow">
                 <Users className="w-6 h-6 text-primary-foreground" />
               </div>
@@ -107,7 +91,7 @@ const Landing = () => {
               </p>
             </div>
 
-            <div className="text-center space-y-4 p-6 rounded-xl bg-card/30 backdrop-blur-sm border border-border/50 hover:shadow-glow transition-smooth animate-fade-in" style={{ animationDelay: '1s' }}>
+            <div className="text-center space-y-4 p-6 rounded-xl glass hover-lift hover-glow animate-fade-in" style={{ animationDelay: '1s' }}>
               <div className="inline-flex items-center justify-center w-12 h-12 rounded-full gradient-primary shadow-glow">
                 <TrendingUp className="w-6 h-6 text-primary-foreground" />
               </div>
@@ -121,7 +105,7 @@ const Landing = () => {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-border/50 bg-card/30 backdrop-blur-sm mt-20">
+      <footer className="border-t border-border/50 glass mt-20">
         <div className="container mx-auto px-4 py-8">
           <div className="text-center text-sm text-muted-foreground">
             <p>© 2025 Sibilo. Anonymous voice notes, amplified.</p>
