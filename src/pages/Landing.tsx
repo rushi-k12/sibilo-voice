@@ -55,15 +55,52 @@ const Landing = () => {
             </div>
           </div>
 
-          {/* App Preview Placeholder */}
+          {/* App Preview Demo */}
           <div className="py-12 animate-fade-in" style={{ animationDelay: '0.4s' }}>
             <div className="relative rounded-2xl overflow-hidden shadow-elevated border border-border/50 glass hover-lift">
-              <div className="aspect-video flex items-center justify-center">
-                <div className="text-center space-y-4 p-8">
-                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-full gradient-primary shadow-glow">
-                    <Radio className="w-10 h-10 text-primary-foreground" />
+              <div className="aspect-video flex items-center justify-center p-8">
+                <div className="w-full max-w-md space-y-4">
+                  {/* Demo Voice Note Cards */}
+                  <div className="glass rounded-lg p-4 border border-border/30 animate-fade-in">
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 rounded-full gradient-primary shadow-glow flex items-center justify-center">
+                        <Mic className="w-5 h-5 text-primary-foreground" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <div className="h-2 bg-primary/60 rounded-full flex-1 overflow-hidden">
+                            <div className="h-full w-3/4 bg-primary rounded-full"></div>
+                          </div>
+                          <span className="text-xs text-muted-foreground">0:45</span>
+                        </div>
+                        <p className="text-sm text-muted-foreground">Voice note from Tech Talk</p>
+                      </div>
+                    </div>
                   </div>
-                  <p className="text-muted-foreground">App Preview</p>
+
+                  <div className="glass rounded-lg p-4 border border-border/30 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 rounded-full gradient-primary shadow-glow flex items-center justify-center">
+                        <Mic className="w-5 h-5 text-primary-foreground" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <div className="h-2 bg-primary/60 rounded-full flex-1 overflow-hidden">
+                            <div className="h-full w-1/2 bg-primary rounded-full"></div>
+                          </div>
+                          <span className="text-xs text-muted-foreground">1:12</span>
+                        </div>
+                        <p className="text-sm text-muted-foreground">Voice note from Music Reviews</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="text-center pt-2">
+                    <div className="inline-flex items-center gap-2 text-sm text-muted-foreground">
+                      <Radio className="w-4 h-4" />
+                      <span>Live voice conversations</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -107,8 +144,23 @@ const Landing = () => {
       {/* Footer */}
       <footer className="border-t border-border/50 glass mt-20">
         <div className="container mx-auto px-4 py-8">
-          <div className="text-center text-sm text-muted-foreground">
-            <p>© 2025 Sibilo. Anonymous voice notes, amplified.</p>
+          <div className="flex flex-col items-center gap-4">
+            <div className="flex items-center gap-6 text-sm">
+              <button className="text-muted-foreground hover:text-foreground transition-smooth">
+                About
+              </button>
+              <span className="text-border">•</span>
+              <button className="text-muted-foreground hover:text-foreground transition-smooth">
+                Contact
+              </button>
+              <span className="text-border">•</span>
+              <button className="text-muted-foreground hover:text-foreground transition-smooth">
+                Privacy Policy
+              </button>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              © 2025 Sibilo. Anonymous voice notes, amplified.
+            </p>
           </div>
         </div>
       </footer>
