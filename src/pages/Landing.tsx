@@ -25,21 +25,21 @@ const Landing = () => {
           {/* Main Content */}
           <div className="py-20 text-center space-y-8">
             <div className="space-y-4 animate-fade-in">
-              <h2 className="text-5xl md:text-6xl font-bold leading-tight">
-                Anonymous Voice Notes,
-                <span className="gradient-primary bg-clip-text text-transparent block mt-2">
-                  Amplified
+              <h2 className="text-5xl md:text-7xl font-bold leading-tight">
+                <span className="drop-shadow-glow">Speak. Share.</span>
+                <span className="gradient-primary bg-clip-text text-transparent block mt-2 drop-shadow-glow">
+                  Be Heard.
                 </span>
               </h2>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                Share your thoughts through voice in topic-based channels. No names, just authentic conversations.
+              <p className="text-xl md:text-2xl text-foreground/80 max-w-2xl mx-auto">
+                Anonymous voice notes in topic-based channels. Pure content, authentic conversations.
               </p>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in" style={{ animationDelay: '0.2s' }}>
               <Button
                 size="lg"
-                className="gradient-primary shadow-glow text-lg px-8 hover-lift"
+                className="gradient-primary shadow-glow text-lg px-10 py-6 h-auto hover-lift font-semibold"
                 onClick={() => navigate('/auth')}
               >
                 Get Started
@@ -47,10 +47,10 @@ const Landing = () => {
               <Button
                 size="lg"
                 variant="outline"
-                className="text-lg px-8 glass hover-glow"
+                className="text-lg px-10 py-6 h-auto glass hover-glow border-primary/30 font-semibold"
                 onClick={() => navigate('/auth')}
               >
-                Learn More
+                Sign In
               </Button>
             </div>
           </div>

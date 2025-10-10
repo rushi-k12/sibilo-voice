@@ -48,8 +48,10 @@ export const Navbar = ({
                 <div className="inline-flex items-center justify-center w-10 h-10 rounded-full gradient-primary shadow-glow">
                   <Mic className="w-5 h-5 text-primary-foreground" />
                 </div>
-                <h1 className="text-2xl font-bold gradient-primary bg-clip-text text-transparent">
-                  Sibilo
+                <h1 className="text-2xl font-bold drop-shadow-glow">
+                  <span className="gradient-primary bg-clip-text text-transparent">
+                    Sibilo
+                  </span>
                 </h1>
               </div>
             )}

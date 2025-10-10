@@ -131,4 +131,12 @@ All colors MUST be HSL.
   .hover-glow {
     @apply transition-smooth hover:shadow-glow;
   }
+
+  .input-glow {
+    @apply transition-smooth focus-visible:shadow-glow focus-visible:border-primary/50;
+  }
+
+  .drop-shadow-glow {
+    filter: drop-shadow(0 0 20px hsl(var(--primary) / 0.3));
+  }
 }

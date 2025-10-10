@@ -75,22 +75,24 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 waveform-bg">
+    <div className="min-h-screen flex items-center justify-center p-4 gradient-mesh waveform-bg animate-fade-in">
       <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full gradient-primary shadow-glow mb-4">
-            <Mic className="w-8 h-8 text-primary-foreground" />
+        <div className="text-center mb-8 animate-fade-in">
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full gradient-primary shadow-glow mb-4 animate-scale-in">
+            <Mic className="w-10 h-10 text-primary-foreground" />
           </div>
-          <h1 className="text-4xl font-bold gradient-primary bg-clip-text text-transparent mb-2">
-            Sibilo
+          <h1 className="text-5xl font-bold mb-2">
+            <span className="gradient-primary bg-clip-text text-transparent drop-shadow-glow">
+              Sibilo
+            </span>
           </h1>
-          <p className="text-muted-foreground">Anonymous voice notes, amplified</p>
+          <p className="text-foreground/80 text-lg">Speak. Share. Be Heard.</p>
         </div>
 
-        <Card className="shadow-card border-border/50">
+        <Card className="glass shadow-elevated border border-glass-border backdrop-blur-xl animate-fade-in" style={{ animationDelay: '0.2s' }}>
           <CardHeader>
-            <CardTitle>{isSignUp ? 'Create Account' : 'Welcome Back'}</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-2xl">{isSignUp ? 'Create Account' : 'Welcome Back'}</CardTitle>
+            <CardDescription className="text-base">
               {isSignUp 
                 ? 'Join the conversation with your voice' 
                 : 'Sign in to continue listening'}
@@ -99,7 +101,7 @@ const Auth = () => {
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email" className="text-sm font-medium">Email</Label>
                 <Input
                   id="email"
                   type="email"
@@ -108,10 +110,11 @@ const Auth = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   disabled={isLoading}
+                  className="input-glow"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password" className="text-sm font-medium">Password</Label>
                 <Input
                   id="password"
                   type="password"
@@ -121,11 +124,12 @@ const Auth = () => {
                   required
                   disabled={isLoading}
                   minLength={6}
+                  className="input-glow"
                 />
               </div>
               <Button 
                 type="submit" 
-                className="w-full gradient-primary shadow-glow" 
+                className="w-full gradient-primary shadow-glow hover-lift text-base font-medium" 
                 disabled={isLoading}
               >
                 {isLoading ? 'Loading...' : isSignUp ? 'Sign Up' : 'Sign In'}
