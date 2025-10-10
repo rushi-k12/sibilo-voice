@@ -81,10 +81,8 @@ const Auth = () => {
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-full gradient-primary shadow-glow mb-4 animate-scale-in">
             <Mic className="w-10 h-10 text-primary-foreground" />
           </div>
-          <h1 className="text-5xl font-bold mb-2">
-            <span className="gradient-primary bg-clip-text text-transparent drop-shadow-glow">
-              Sibilo
-            </span>
+          <h1 className="text-5xl font-bold mb-2 text-foreground drop-shadow-glow">
+            Sibilo
           </h1>
           <p className="text-foreground/80 text-lg">Speak. Share. Be Heard.</p>
         </div>
