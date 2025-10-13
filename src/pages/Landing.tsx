@@ -27,7 +27,7 @@ const Landing = () => {
             <div className="space-y-4 animate-fade-in">
               <h2 className="text-5xl md:text-7xl font-bold leading-tight">
                 <span className="drop-shadow-glow">Speak. Share.</span>
-                <span className="gradient-primary bg-clip-text text-transparent block mt-2 drop-shadow-glow">
+                <span className="text-foreground block mt-2 drop-shadow-glow">
                   Be Heard.
                 </span>
               </h2>
