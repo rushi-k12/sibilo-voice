@@ -146,15 +146,24 @@ const Landing = () => {
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col items-center gap-4">
             <div className="flex items-center gap-6 text-sm">
-              <button className="text-muted-foreground hover:text-foreground transition-smooth">
+              <button 
+                onClick={() => navigate('/about')}
+                className="text-muted-foreground hover:text-foreground transition-smooth"
+              >
                 About
               </button>
               <span className="text-border">•</span>
-              <button className="text-muted-foreground hover:text-foreground transition-smooth">
+              <button 
+                onClick={() => navigate('/contact')}
+                className="text-muted-foreground hover:text-foreground transition-smooth"
+              >
                 Contact
               </button>
               <span className="text-border">•</span>
-              <button className="text-muted-foreground hover:text-foreground transition-smooth">
+              <button 
+                onClick={() => navigate('/privacy')}
+                className="text-muted-foreground hover:text-foreground transition-smooth"
+              >
                 Privacy Policy
               </button>
             </div>
