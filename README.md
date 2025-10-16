@@ -1,4 +1,4 @@
-# 🎙️ Sibilo Voice
+# 🎙️ Sibilo
 
 **Speak. Share. Be Heard.**  
 Sibilo Voice is an anonymous voice-based social platform that enables users to record, share, and engage in authentic conversations through short voice notes — organized into topic-based channels. No profiles, no filters — just real voices and real thoughts.
@@ -62,7 +62,7 @@ Then visit http://localhost:5173 in your browser.
 In a world full of curated text and filters, Sibilo brings back genuine human emotion through voice.
 It’s built on the belief that everyone has a story worth sharing — and every voice deserves to be heard.
 
-##📬 Contact
+## 📬 Contact
 
 Have feedback or ideas?
 Reach out via GitHub Issues
