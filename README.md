@@ -37,9 +37,9 @@ No user tracking, no social metrics. Just privacy, authenticity, and connection 
 ## ⚙️ Getting Started
 
 ###  Clone the Repository
-```bash
+``bash
 git clone https://github.com/rushi-k12/sibilo-voice.git
-cd sibilo-voice
+cd sibilo-voice``
 
 ### Install Dependencies
 npm install
