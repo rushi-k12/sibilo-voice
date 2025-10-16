@@ -1,73 +1,69 @@
-# Welcome to your Lovable project
+# 🎙️ Sibilo Voice
 
-## Project info
+**Speak. Share. Be Heard.**  
+Sibilo Voice is an anonymous voice-based social platform that enables users to record, share, and engage in authentic conversations through short voice notes — organized into topic-based channels. No profiles, no filters — just real voices and real thoughts.
 
-**URL**: https://lovable.dev/projects/4fbce825-ad1a-4984-b418-d10584479590
+---
 
-## How can I edit this code?
+## 🚀 Features
 
-There are several ways of editing your application.
+### 🔊 Voice First
+Record and share your thoughts instantly using built-in voice recording. Skip the typing — just talk.
 
-**Use Lovable**
+### 🕶️ Anonymous Sharing
+Stay completely anonymous while participating in meaningful discussions. Your content speaks for itself.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/4fbce825-ad1a-4984-b418-d10584479590) and start prompting.
+### 🗳️ Community Voting
+Upvote and discover the best voice notes. Quality content naturally rises to the top.
 
-Changes made via Lovable will be committed automatically to this repo.
+### 🧩 Topic-Based Channels
+Join themed channels — from **Tech Talk** to **Music Reviews**, **Comedy**, **Storytelling**, and more.
 
-**Use your preferred IDE**
+### 🔒 Privacy Focused
+No user tracking, no social metrics. Just privacy, authenticity, and connection through voice.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+---
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 🧠 Tech Stack
 
-Follow these steps:
+| Technology | Purpose |
+|-------------|----------|
+| **Vite + React + TypeScript** | Frontend framework and build tool |
+| **shadcn/ui + Tailwind CSS** | Modern UI components and styling |
+| **Supabase** | Backend services (auth, database, and real-time interactions) |
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+---
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## ⚙️ Getting Started
 
-# Step 3: Install the necessary dependencies.
-npm i
+###  Clone the Repository
+```bash
+git clone https://github.com/rushi-k12/sibilo-voice.git
+cd sibilo-voice
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+### Install Dependencies
+npm install
+
+### Set Up Environment Variables
+
+Create a .env file in the project root and add your Supabase credentials:
+
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+
+### Run the Development Server
 npm run dev
-```
 
-**Edit a file directly in GitHub**
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Then visit http://localhost:5173 in your browser.
 
-**Use GitHub Codespaces**
+## 💡 Vision
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+In a world full of curated text and filters, Sibilo brings back genuine human emotion through voice.
+It’s built on the belief that everyone has a story worth sharing — and every voice deserves to be heard.
 
-## What technologies are used for this project?
+##📬 Contact
 
-This project is built with:
+Have feedback or ideas?
+Reach out via GitHub Issues
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/4fbce825-ad1a-4984-b418-d10584479590) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
